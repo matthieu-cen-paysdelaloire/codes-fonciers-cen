@@ -46,6 +46,22 @@ WHERE
     -- 3. Toujours sous gestion à la fin de 2025
     (date_fin_ore IS NULL OR date_fin_ore > '2025-12-31');
 
+
+-- Nombre total d'hectares de sites militaires en 2025* --
+SELECT sum(surf_parc_maitrise_ha)
+FROM parcelles_cen
+WHERE 
+	-- 1. Exclusion des sites militaires
+    id_site_cen_parc IN ('TORP','HTF','BREI','AUVO','FONT')
+    
+    AND 
+    -- 2. Entrée en gestion historique jusqu'en 2025 inclus
+    (date_debut_ore < '2026-01-01' OR date_acquisition < '2026-01-01')
+    
+    AND 
+    -- 3. Toujours sous gestion à la fin de 2025
+    (date_fin_ore IS NULL OR date_fin_ore > '2025-12-31');
+
 	
 -- Nombre total d'hectares en 2025* --
 SELECT sum(surf_parc_maitrise_ha) 
