@@ -51,7 +51,7 @@ WHERE
 SELECT sum(surf_parc_maitrise_ha)
 FROM parcelles_cen
 WHERE 
-	-- 1. Exclusion des sites militaires
+	-- 1. Ne garder que les sites militaires
     id_site_cen_parc IN ('TORP','HTF','BREI','AUVO','FONT')
     
     AND 
