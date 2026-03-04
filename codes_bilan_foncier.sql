@@ -113,3 +113,15 @@ WHERE
     AND 
     -- 3. Toujours sous contrat à la fin de 2025
     (date_fin_ore IS NULL OR date_fin_ore > '2025-12-31');
+
+
+-- Nombre d'hectares de sites Natura 2000 --
+SELECT round(sum(n2000_surface_m2)/10000, 4)
+FROM sites_cen
+WHERE 
+    -- 1. Filtrer sur la directive Natura 2000
+    n2000_directive IN ('ZPS', 'ZSC', 'ZPS_ZSC')
+    
+    AND 
+    -- 2. Site créer avant ou pendant 2025
+    date_crea_site < '2026-01-01'
