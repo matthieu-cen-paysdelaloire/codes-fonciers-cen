@@ -11,8 +11,7 @@ CREATE SERVER fdw_fcen_paysdelaloire		-- créer le serveur 'fdw_fcen_paysdelaloi
 CREATE USER MAPPING			-- création de l'utilisateur d'accès au serveur 
 	FOR postgres			-- nom de l'utilisateur qui aura accès au serveur distant (doit déjà exister) 
 	SERVER fdw_fcen_paysdelaloire		-- connexion au serveur distant mis en place précédement
-	OPTIONS (password 'CEN24:Samepik,Grav.Rico24!', user 'cen24');		--options de connexion
-
+	OPTIONS (password '????', user '????');		--options de connexion
 
 --Creation table distante site
 DROP FOREIGN TABLE IF EXISTS cen.site_cen_24_pdll;
@@ -61,11 +60,11 @@ CREATE FOREIGN TABLE cen.site_cen_24_pdll (		-- création d'une table distante (
 	doc_gestion_date_fin date NULL,
 	surf_doc_gestion_m2 int4 NULL,
 	url_fiche_inpn varchar NULL,
-	url_fiche_cen varchar(500) NULL,
+	url_fiche_cen varchar(2000) NULL,
 	doc_justif_admin int4 NULL,
 	ouverture_public int4 NULL,
 	description_site text NULL,
-	url_site_photo varchar(500) NULL,
+	url_site_photo varchar(1000) NULL,
 	sensibilite int4 NULL,
 	remq_sensibilite varchar NULL,
 	non_diffusion varchar(1) NULL
@@ -120,14 +119,15 @@ ALTER TABLE cen.parcelle_cen_24_pdll OWNER TO postgres;
 GRANT ALL ON TABLE cen.parcelle_cen_24_pdll TO postgres;		-- attribution de toutes les autorisations à l'utilisateur défini
 
 
-
--- Insersion des données sites 
-
+-- Insertion des données sites 
 TRUNCATE TABLE cen.site_cen_24_pdll;
 INSERT INTO cen.site_cen_24_pdll (id_site_cen, geom, id_cen, id_site_inpn, id_site_fcen, nom_site, id_rnx_inpn, site_lien_rnx, site_rnx_surface_m2, ens, site_cdl, n2000_directive, n2000_surface_m2, terrain_militaire, site_marin, nb_contrat_agri, nb_agri, surf_contra_m2, code_milieu_princ, nature_site_inpn, code_geol, carto_habitats, typo_carto_habitat, surf_carto_habitat_m2, date_crea_site, date_maj_site, nature_perimetre, source_geom_site_nature, source_geom_site_date, echelle_num_site, precision_num_site, gestionnaire_site, operateur, surf_libre_evolution_m2, doc_gestion_presence, doc_gestion_nom, doc_gestion_evaluation, doc_gestion_date_ini, doc_gestion_date_maj, doc_gestion_date_fin, surf_doc_gestion_m2, url_fiche_inpn, url_fiche_cen, doc_justif_admin, ouverture_public, description_site, url_site_photo, sensibilite, remq_sensibilite, non_diffusion)
-SELECT id_site_cen, geom, id_cen, id_site_inpn, id_site_fcen_parc, nom_site, id_rnx_inpn, site_lien_rnx, site_rnx_surface_m2, ens, site_cdl, n2000_directive, n2000_surface_m2, terrain_militaire, site_marin, nbre_contrat_agri, nb_agri, surf_contra_m2, code_milieu_princ, nature_site_inpn, code_geol, carto_habitats, typo_carto_habitat, surf_carto_habitat_m2, date_crea_site, date_maj_site, nature_perimetre, source_geom_site_nature, source_geom_site_date, echelle_num_site, precision_num_site, gestionnaire_site, operateur, surf_libre_evolution_m2, doc_gestion_presence, doc_gestion_nom, doc_gestion_evaluation, doc_gestion_date_ini, doc_gestion_date_maj, doc_gestion_date_fin, surf_doc_gestion_m2, url_fiche_inpn, url_fiche_cen, doc_justif_admin, ouverture_public, description_site, url_site_photo, sensibilite, remq_sensibilite, non_diffusion
+SELECT 
+    id_site_cen, geom, id_cen, id_site_inpn, id_site_cen, nom_site, id_rnx_inpn, site_lien_rnx, site_rnx_surface_m2, ens, site_cdl, n2000_directive, n2000_surface_m2, terrain_militaire, site_marin, nbre_contrat_agri, nb_agri, surf_contra_m2, code_milieu_princ, nature_site_inpn, code_geol, carto_habitats, typo_carto_habitat, surf_carto_habitat_m2, date_crea_site, date_maj_site, nature_perimetre, source_geom_site_nature, source_geom_site_date, echelle_num_site, precision_num_site, gestionnaire_site, operateur, surf_libre_evolution_m2, doc_gestion_presence, doc_gestion_nom, doc_gestion_evaluation, doc_gestion_date_ini, doc_gestion_date_maj, doc_gestion_date_fin, surf_doc_gestion_m2, url_fiche_inpn, url_fiche_cen, doc_justif_admin, ouverture_public, 
+    LEFT(description_site, 500), 
+    url_site_photo, sensibilite, remq_sensibilite, non_diffusion
 FROM cen.sites_cen
-WHERE date_crea_site < '2025-01-01'; 
+WHERE date_crea_site < '2026-01-01';
 
 
 -- Insersion des données parcelles
@@ -135,7 +135,7 @@ TRUNCATE TABLE cen.parcelle_cen_24_pdll;
 INSERT INTO cen.parcelle_cen_24_pdll (geom, id_site_cen_parc, id_site_fcen_parc, insee_dep, insee_com, num_section, num_parc, code_mfu1, code_mfu2, type_prop, mesure_compens, surf_ore_m2, date_debut_ore, date_fin_ore, doc_foncier, source_doc_foncier, parc_gestion_rnx, surf_parc_maitrise_m2, source_geom_parc_nature, source_geom_parc_date, echelle_num_parc, source_surf_parc, date_maj_parcelle, bnd, pour_part, domaine_public, id_proprietaire)
 SELECT geom, id_site_cen_parc, id_site_fcen_parc, insee_dep, insee_com, num_section, num_parc_act, code_mfu1, code_mfu2, type_prop, mesure_compens, surf_ore_m2, date_debut_ore, date_fin_ore, doc_foncier, source_doc_foncier, parc_gestion_rnx, SUM(surf_parc_maitrise_m2) OVER (PARTITION BY num_parc_act), source_geom_parc_nature, source_geom_parc_date, echelle_num_parc, source_surf_parc, date_maj_parcelle, bnd, pour_part, domaine_public, id_proprietaire
 FROM cen.parcelles_cen
-WHERE "tresfonds" != 1 AND date_acquisition < '2025-01-01' OR date_debut_ore < '2025-01-01' ;
+WHERE "tresfonds" != 1 AND (date_acquisition < '2026-01-01' OR date_debut_ore < '2026-01-01') ;
 
 --Suppression des doublons de la base de donnée parcellaire
 WITH sup_doublons AS (
