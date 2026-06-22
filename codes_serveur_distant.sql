@@ -5,12 +5,12 @@ CREATE EXTENSION postgres_fdw		-- création de l'extension postgres_fdw dans le 
 --Creation du serveur distant
 CREATE SERVER fdw_fcen_paysdelaloire		-- créer le serveur 'fdw_fcen_paysdelaloire' (nom perso)
 	FOREIGN DATA WRAPPER postgres_fdw		-- appel de l'extension postgres_fdw créé précédement
-	OPTIONS (dbname 'depot_fcen', host '91.206.198.168', port '5432');		--données pour se connecter à la base
+	OPTIONS (dbname '????', host '????', port '????');		--données pour se connecter à la base
 
 --Creation du mappage User
 CREATE USER MAPPING			-- création de l'utilisateur d'accès au serveur 
 	FOR postgres			-- nom de l'utilisateur qui aura accès au serveur distant (doit déjà exister) 
-	SERVER fdw_fcen_paysdelaloire		-- connexion au serveur distant mis en place précédement
+	SERVER ????		-- connexion au serveur distant mis en place précédement
 	OPTIONS (password '????', user '????');		--options de connexion
 
 --Creation table distante site
