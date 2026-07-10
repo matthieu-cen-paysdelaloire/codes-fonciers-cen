@@ -67,7 +67,8 @@ CREATE FOREIGN TABLE cen.site_cen_24_pdll (		-- création d'une table distante (
 	url_site_photo varchar(1000) NULL,
 	sensibilite int4 NULL,
 	remq_sensibilite varchar NULL,
-	non_diffusion varchar(1) NULL
+	non_diffusion varchar(1) NULL,
+	surf_sylvae_m2 varchar(10) NULL
 )
 SERVER fdw_fcen_paysdelaloire
 OPTIONS (schema_name 'fcen', table_name 'site_cen_24');
@@ -121,11 +122,11 @@ GRANT ALL ON TABLE cen.parcelle_cen_24_pdll TO postgres;		-- attribution de tout
 
 -- Insertion des données sites 
 TRUNCATE TABLE cen.site_cen_24_pdll;
-INSERT INTO cen.site_cen_24_pdll (id_site_cen, geom, id_cen, id_site_inpn, id_site_fcen, nom_site, id_rnx_inpn, site_lien_rnx, site_rnx_surface_m2, ens, site_cdl, n2000_directive, n2000_surface_m2, terrain_militaire, site_marin, nb_contrat_agri, nb_agri, surf_contra_m2, code_milieu_princ, nature_site_inpn, code_geol, carto_habitats, typo_carto_habitat, surf_carto_habitat_m2, date_crea_site, date_maj_site, nature_perimetre, source_geom_site_nature, source_geom_site_date, echelle_num_site, precision_num_site, gestionnaire_site, operateur, surf_libre_evolution_m2, doc_gestion_presence, doc_gestion_nom, doc_gestion_evaluation, doc_gestion_date_ini, doc_gestion_date_maj, doc_gestion_date_fin, surf_doc_gestion_m2, url_fiche_inpn, url_fiche_cen, doc_justif_admin, ouverture_public, description_site, url_site_photo, sensibilite, remq_sensibilite, non_diffusion)
+INSERT INTO cen.site_cen_24_pdll (id_site_cen, geom, id_cen, id_site_inpn, id_site_fcen, nom_site, id_rnx_inpn, site_lien_rnx, site_rnx_surface_m2, ens, site_cdl, n2000_directive, n2000_surface_m2, terrain_militaire, site_marin, nb_contrat_agri, nb_agri, surf_contra_m2, code_milieu_princ, nature_site_inpn, code_geol, carto_habitats, typo_carto_habitat, surf_carto_habitat_m2, date_crea_site, date_maj_site, nature_perimetre, source_geom_site_nature, source_geom_site_date, echelle_num_site, precision_num_site, gestionnaire_site, operateur, surf_libre_evolution_m2, doc_gestion_presence, doc_gestion_nom, doc_gestion_evaluation, doc_gestion_date_ini, doc_gestion_date_maj, doc_gestion_date_fin, surf_doc_gestion_m2, url_fiche_inpn, url_fiche_cen, doc_justif_admin, ouverture_public, description_site, url_site_photo, sensibilite, remq_sensibilite, non_diffusion, surf_sylvae_m2)
 SELECT 
     id_site_cen, geom, id_cen, id_site_inpn, id_site_cen, nom_site, id_rnx_inpn, site_lien_rnx, site_rnx_surface_m2, ens, site_cdl, n2000_directive, n2000_surface_m2, terrain_militaire, site_marin, nbre_contrat_agri, nb_agri, surf_contra_m2, code_milieu_princ, nature_site_inpn, code_geol, carto_habitats, typo_carto_habitat, surf_carto_habitat_m2, date_crea_site, date_maj_site, nature_perimetre, source_geom_site_nature, source_geom_site_date, echelle_num_site, precision_num_site, gestionnaire_site, operateur, surf_libre_evolution_m2, doc_gestion_presence, doc_gestion_nom, doc_gestion_evaluation, doc_gestion_date_ini, doc_gestion_date_maj, doc_gestion_date_fin, surf_doc_gestion_m2, url_fiche_inpn, url_fiche_cen, doc_justif_admin, ouverture_public, 
     LEFT(description_site, 500), 
-    url_site_photo, sensibilite, remq_sensibilite, non_diffusion
+    url_site_photo, sensibilite, remq_sensibilite, non_diffusion, surf_sylvae_m2
 FROM cen.sites_cen
 WHERE date_crea_site < '2026-01-01';
 
