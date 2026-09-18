@@ -1,3 +1,10 @@
+/* 
+Une fois l'extension postgres_fdw  installée, et la création du serveur distant et du mappage User effectuée, il n'est pas obligatoire de relancer ces sections de codes 
+pour pouvoir remettre en place des tables distantes pour la fédération des CEN
+*/
+
+		-- CREATION DE L'INSTANCE  --
+
 --Ajout de l'extension "postgres_fdw"
 CREATE EXTENSION postgres_fdw		-- création de l'extension postgres_fdw dans le schéma "cen"
 	SCHEMA "cen" ;
@@ -12,6 +19,8 @@ CREATE USER MAPPING			-- création de l'utilisateur d'accès au serveur
 	FOR postgres			-- nom de l'utilisateur qui aura accès au serveur distant (doit déjà exister) 
 	SERVER ????		-- connexion au serveur distant mis en place précédement
 	OPTIONS (password '????', user '????');		--options de connexion
+
+		-- CREATION ET REMPLISSAGE DES TABLES DISTANTES --
 
 --Creation table distante site
 DROP FOREIGN TABLE IF EXISTS cen.site_cen_24_pdll;
